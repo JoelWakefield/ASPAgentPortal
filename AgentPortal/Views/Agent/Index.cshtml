@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AgentPortal.Models.Agent>
+
+@{
+    ViewData["Title"] = "Agents";
+}
+
+
+<h1>Agents</h1>
+
+<table class="table table-responsive table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(agent => agent.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(agent => agent.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(agent => agent.WorkingArea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(agent => agent.Commission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(agent => agent.PhoneNo)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @{
+                    var id = Html.DisplayFor(modelItem => item.Code);
+                    <a href="Agent/Detail/@id?">@id</a>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkingArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commission)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNo)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
