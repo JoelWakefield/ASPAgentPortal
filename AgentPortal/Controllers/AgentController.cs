@@ -26,5 +26,18 @@ namespace AgentPortal.Controllers
         {
             return View(_agentData.GetAgent(id));
         }
+
+        [HttpGet]
+        public IActionResult NewAgent()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewAgent(Agent agent)
+        {
+            _agentData.CreateAgent(agent);
+            return RedirectToAction("Index");
+        }
     }
 }

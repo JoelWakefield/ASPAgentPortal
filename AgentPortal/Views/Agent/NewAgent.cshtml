@@ -1,0 +1,40 @@
+﻿
+<style>
+    div {
+        display:flex;
+        flex-direction:column;
+    }
+
+    div input {
+        max-width: 500px;
+    }
+
+    button {
+        margin-top: 2em;
+    }
+</style>
+
+<h4>Create New Agent</h4>
+
+<form action="/agent/newagent" method="post">
+
+    <div>
+        <label>Agent Code</label>
+        <input name="code" placeholder="agent code" />
+
+        <label>Agent Name</label>
+        <input name="name" placeholder="agent name" />
+
+        <label>Working Area</label>
+        <input name="workingarea" placeholder="working area" />
+
+        <label>Commission</label>
+        <input name="commission" placeholder="commission" />
+
+        <label>Phone No</label>
+        <input name="phoneno" placeholder="phone #" />
+    </div>
+
+    <button type="submit">CREATE</button>
+
+</form>
