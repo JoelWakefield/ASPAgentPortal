@@ -17,7 +17,7 @@ namespace AgentPortal.Controllers
             _configuration = configuration;
         }
 
-        public List<Agent> GetAllAgents()
+        public List<Agent> GetAllAgents(bool onlyActive = true)
         {
             List<Agent> agents = new List<Agent>();
 
@@ -28,7 +28,16 @@ namespace AgentPortal.Controllers
                 var com = new SqlCommand();
                 com.Connection = conn;
                 com.CommandType = System.Data.CommandType.Text;
-                com.CommandText = "SELECT * FROM AGENTS";
+
+                if (onlyActive)
+                {
+                    com.Parameters.Add(new SqlParameter { ParameterName = "@active", Value = true, SqlDbType = System.Data.SqlDbType.Bit });
+                    com.CommandText = "SELECT * FROM AGENTS WHERE IsActive = @active";
+                }
+                else
+                {
+                    com.CommandText = "SELECT * FROM AGENTS";
+                }
 
                 var reader = com.ExecuteReader();
 
@@ -97,8 +106,60 @@ namespace AgentPortal.Controllers
                 com.Parameters.Add(new SqlParameter { ParameterName = "@area", Value = agent.WorkingArea, SqlDbType = System.Data.SqlDbType.VarChar });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@comm", Value = agent.Commission, SqlDbType = System.Data.SqlDbType.Decimal });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@phno", Value = agent.PhoneNo, SqlDbType = System.Data.SqlDbType.Char });
+                com.Parameters.Add(new SqlParameter { ParameterName = "@active", Value = agent.IsActive, SqlDbType = System.Data.SqlDbType.Char });
                 
-                com.CommandText = "INSERT INTO Agents VALUES (@code, @name, @area, @comm, @phno)";
+                com.CommandText = "INSERT INTO Agents VALUES (@code, @name, @area, @comm, @phno, @active)";
+
+                com.ExecuteNonQuery();
+
+                conn.Close();
+            }
+        }
+
+        public void UpdateAgent(Agent agent)
+        {
+            using (var conn = new SqlConnection(_configuration.GetConnectionString("default")))
+            {
+                conn.Open();
+
+                var com = new SqlCommand();
+                com.Connection = conn;
+                com.CommandType = System.Data.CommandType.Text;
+
+                com.Parameters.Add(new SqlParameter { ParameterName = "@name", Value = agent.Name, SqlDbType = System.Data.SqlDbType.VarChar });
+                com.Parameters.Add(new SqlParameter { ParameterName = "@area", Value = agent.WorkingArea, SqlDbType = System.Data.SqlDbType.VarChar });
+                com.Parameters.Add(new SqlParameter { ParameterName = "@comm", Value = agent.Commission, SqlDbType = System.Data.SqlDbType.Decimal });
+                com.Parameters.Add(new SqlParameter { ParameterName = "@phno", Value = agent.PhoneNo, SqlDbType = System.Data.SqlDbType.Char });
+                com.Parameters.Add(new SqlParameter { ParameterName = "@active", Value = agent.IsActive, SqlDbType = System.Data.SqlDbType.Char });
+
+                com.CommandText = "UPDATE Agents SET " +
+                    "AgentName = @name" +
+                    "WorkingArea = @area" +
+                    "Commission = @comm" +
+                    "PhoneNo = @phno" +
+                    "IsActive = @active" +
+                    "WHERE AgentCode = @code";
+
+                com.ExecuteNonQuery();
+
+                conn.Close();
+            }
+        }
+
+        public void DeactivateAgent(string code)
+        {
+            using (var conn = new SqlConnection(_configuration.GetConnectionString("default")))
+            {
+                conn.Open();
+
+                var com = new SqlCommand();
+                com.Connection = conn;
+                com.CommandType = System.Data.CommandType.Text;
+
+                com.Parameters.Add(new SqlParameter { ParameterName = "@code", Value = code, SqlDbType = System.Data.SqlDbType.Char });
+                com.Parameters.Add(new SqlParameter { ParameterName = "@active", Value = false, SqlDbType = System.Data.SqlDbType.Bit });
+
+                com.CommandText = "UPDATE Agents SET IsActive = @active WHERE AgentCode = @code";
 
                 com.ExecuteNonQuery();
 

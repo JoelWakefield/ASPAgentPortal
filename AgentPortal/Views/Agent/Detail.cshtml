@@ -21,3 +21,16 @@
 <p>
     @Model.PhoneNo
 </p>
+
+<form action="/Agent/RemoveAgent/@Model.Code" method="post">
+    <button type="submit" id="delete" class="btn-danger">Delete</button>
+</form>
+
+
+<script>
+    const deleteButton = document.querySelector('#delete');
+
+    deleteButton.addEventListener('click', () => {
+        fetch(`/Agent/RemoveAgent/${model}`)
+    })
+</script>

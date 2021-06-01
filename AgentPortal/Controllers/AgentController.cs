@@ -19,7 +19,7 @@ namespace AgentPortal.Controllers
 
         public IActionResult Index()
         {
-            return View(_agentData.GetAllAgents());
+            return View(_agentData.GetAllAgents(onlyActive: true));
         }
 
         public IActionResult Detail(string id)
@@ -37,6 +37,13 @@ namespace AgentPortal.Controllers
         public IActionResult NewAgent(Agent agent)
         {
             _agentData.CreateAgent(agent);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult RemoveAgent(string id)
+        {
+            _agentData.DeactivateAgent(id);
             return RedirectToAction("Index");
         }
     }
