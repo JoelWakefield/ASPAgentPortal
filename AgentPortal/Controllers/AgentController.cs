@@ -40,6 +40,19 @@ namespace AgentPortal.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            return View(_agentData.GetAgent(id));
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Agent agent)
+        {
+            _agentData.UpdateAgent(agent);
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public IActionResult RemoveAgent(string id)
         {

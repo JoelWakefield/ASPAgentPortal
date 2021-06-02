@@ -106,9 +106,8 @@ namespace AgentPortal.Controllers
                 com.Parameters.Add(new SqlParameter { ParameterName = "@area", Value = agent.WorkingArea, SqlDbType = System.Data.SqlDbType.VarChar });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@comm", Value = agent.Commission, SqlDbType = System.Data.SqlDbType.Decimal });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@phno", Value = agent.PhoneNo, SqlDbType = System.Data.SqlDbType.Char });
-                com.Parameters.Add(new SqlParameter { ParameterName = "@active", Value = agent.IsActive, SqlDbType = System.Data.SqlDbType.Char });
                 
-                com.CommandText = "INSERT INTO Agents VALUES (@code, @name, @area, @comm, @phno, @active)";
+                com.CommandText = "INSERT INTO Agents VALUES (@code, @name, @area, @comm, @phno)";
 
                 com.ExecuteNonQuery();
 
@@ -125,19 +124,18 @@ namespace AgentPortal.Controllers
                 var com = new SqlCommand();
                 com.Connection = conn;
                 com.CommandType = System.Data.CommandType.Text;
-
+                
+                com.Parameters.Add(new SqlParameter { ParameterName = "@code", Value = agent.Code, SqlDbType = System.Data.SqlDbType.Char });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@name", Value = agent.Name, SqlDbType = System.Data.SqlDbType.VarChar });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@area", Value = agent.WorkingArea, SqlDbType = System.Data.SqlDbType.VarChar });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@comm", Value = agent.Commission, SqlDbType = System.Data.SqlDbType.Decimal });
                 com.Parameters.Add(new SqlParameter { ParameterName = "@phno", Value = agent.PhoneNo, SqlDbType = System.Data.SqlDbType.Char });
-                com.Parameters.Add(new SqlParameter { ParameterName = "@active", Value = agent.IsActive, SqlDbType = System.Data.SqlDbType.Char });
 
                 com.CommandText = "UPDATE Agents SET " +
-                    "AgentName = @name" +
-                    "WorkingArea = @area" +
-                    "Commission = @comm" +
-                    "PhoneNo = @phno" +
-                    "IsActive = @active" +
+                    "AgentName = @name, " +
+                    "WorkingArea = @area, " +
+                    "Commission = @comm, " +
+                    "PhoneNo = @phno " +
                     "WHERE AgentCode = @code";
 
                 com.ExecuteNonQuery();

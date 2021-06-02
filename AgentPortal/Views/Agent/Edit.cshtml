@@ -1,4 +1,6 @@
-﻿
+﻿@model AgentPortal.Models.Agent
+
+
 <style>
     div {
         display: flex;
@@ -19,27 +21,27 @@
     }
 </style>
 
-<h4>Create New Agent</h4>
+<h4>Edit Agent</h4>
 
-<form action="/Agent/NewAgent" method="post">
+<form action="/Agent/Edit" method="post">
 
     <div>
         <label>Agent Code</label>
-        <input name="code" placeholder="agent code" />
+        <input name="code" value=@Model.Code />
 
         <label>Agent Name</label>
-        <input name="name" placeholder="agent name" />
+        <input name="name" value=@Model.Name />
 
         <label>Working Area</label>
-        <input name="workingarea" placeholder="working area" />
+        <input name="workingarea" value=@Model.WorkingArea />
 
         <label>Commission</label>
-        <input name="commission" placeholder="commission" />
+        <input name="commission" value=@Model.Commission />
 
         <label>Phone No</label>
-        <input name="phoneno" placeholder="phone #" />
+        <input name="phoneno" value=@Model.PhoneNo />
     </div>
 
-    <button type="submit">CREATE</button>
+    <button class="btn" type="submit">SAVE</button>
 
 </form>

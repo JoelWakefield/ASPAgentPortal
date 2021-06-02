@@ -3,34 +3,26 @@
 <h1>Details</h1>
 
 <p>
-    @Model.Code
+    AgentCode: @Model.Code
 </p>
 
 <p>
-    @Model.Name
+    AgentName: @Model.Name
 </p>
 
 <p>
-    @Model.WorkingArea
+    WorkingArea: @Model.WorkingArea
 </p>
 
 <p>
-    @Model.Commission
+    Commission: @Model.Commission
 </p>
 
 <p>
-    @Model.PhoneNo
+    Phone #: @Model.PhoneNo
 </p>
 
 <form action="/Agent/RemoveAgent/@Model.Code" method="post">
-    <button type="submit" id="delete" class="btn-danger">Delete</button>
+    <button type="submit" id="delete" class="btn btn-danger">Delete</button>
+    <a style="margin: 1em;" href="/Agent/Edit/@Model.Code">Edit</a>
 </form>
-
-
-<script>
-    const deleteButton = document.querySelector('#delete');
-
-    deleteButton.addEventListener('click', () => {
-        fetch(`/Agent/RemoveAgent/${model}`)
-    })
-</script>
